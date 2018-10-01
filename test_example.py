@@ -1,3 +1,3 @@
-def testSomething(x):
-    return x + 1
-testSomething(1)
+def testSomething():
+    return 1
+testSomething()
