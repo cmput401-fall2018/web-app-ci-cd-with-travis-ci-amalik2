@@ -5,3 +5,8 @@ install:
   - pip install -r requirements.txt
 script:
   - pytest
+deploy:
+  provider: script
+  script: sh deploy.sh
+  on:
+    branch: master
