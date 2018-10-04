@@ -7,7 +7,8 @@
   <title>Insert Title Here</title>
 
 
-  <!-- <link rel="stylesheet" href="style.css"> -->
+ <link rel="stylesheet" href="./style.css">
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jura">
 
 </head>
 
@@ -20,15 +21,19 @@
   <p id="contact">Contact</p>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script>
+//  document.createTextNode("abc");
   $(window).on('load', function(){
+//	alert("test");
      // change the URL to your server URL here
-     $.getJSON("http://127.0.0.1:8000/api/person/1/", function (data) {
-          $("#name").text(data.data.attributes.name);
+     $.getJSON("http://162.246.157.110:8000/api/person/1/", function (data) {
+  //        document.createTextNode(JSON.stringify(data));
+	  $("#name").text(data.data.attributes.name);
           $("#about").text(data.data.attributes.about);
           $("#education").text(data.data.attributes.education);
           $("#skills").text(data.data.attributes.skills);
-          // Complete consuming the API data and updating the work and contact sections
-          // HINT: look at the above lines, jquery documentation, see what is the object returned
+	  $("#work").text(data.data.attributes.work);
+	  $("#contact").text(data.data.attributes.contact);
+          // Complete consuming the API data and updating the work and contact sections          // HINT: look at the above lines, jquery documentation, see what is the object returned
      
      
 

@@ -5,6 +5,9 @@ import base64
 def index(request):
     return render(request, 'index.html', {})
 
+def css(request):
+    return HttpResponse("#name { text-align: center; color: #0000FF; font-family: 'Jura', sans-serif; } body { background-color: black; } p { color: #00FF00; font-family: 'Jura', sans-serif; }", content_type="text/css")
+
 # Example for returning a file from an endpoint
 def text_file(request):
 	return HttpResponse("Hello World", content_type="text/plain")
