@@ -16,4 +16,4 @@ base64.b64decode('/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAICAgICAQICAgICAgIDAwYEAwMDAw
 # Hint: content_type is a MIME type and it should be "image/jpeg"
 # The content is a base64 encoded image, one way of storing images in a database
 def image_file(request):
-	return HttpResponse("Hello World", content_type="text/plain")
+	return HttpResponse("Hello World", content_type="image/jpeg")
