@@ -1,9 +1,8 @@
 language: python
 sudo: required
+dist: trusty
 addons:
-  apt:
-    sources:
-      - google-chrome
+  chrome: stable
 python:
   - "3.5"
 before_install:
