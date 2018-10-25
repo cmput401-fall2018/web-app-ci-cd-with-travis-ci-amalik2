@@ -34,6 +34,10 @@ class ServiceTests(unittest.TestCase):
 		assert self.instance.abs_plus(-2) == 3
 		assert self.instance.abs_plus(-2147483648) == 2147483649
 		assert self.instance.abs_plus(2147483647) == 2147483648
+		assert self.instance.abs_plus(0.55555) == 1.55555
+		assert self.instance.abs_plus(-0.55555) == 0.55555
+		self.assertRaises(ValueError, self.instance.abs_plus, "a")
+		
 
 	def test_complicated_function(self):
 		self.instance.divide = MagicMock(25)
@@ -51,6 +55,9 @@ class ServiceTests(unittest.TestCase):
 	@patch("builtins.open")
 	@patch("random.randint")
 	def test_bad_random(self, randintMock, mockOpen):
+		# no file found
+		self.assertRaises(FileNotFoundError, Service.bad_random)
+
 		# integers
 		mockOpen.return_value = MockFile([1, 4, 7])
 		randintMock.return_value = 2
@@ -77,5 +84,3 @@ class ServiceTests(unittest.TestCase):
 		self.assertRaises(ValueError, Service.bad_random)
 		mockOpen.reset_mock()
 		
-		# no file found
-		self.assertRaises(FileNotFoundError, Service.bad_random)
