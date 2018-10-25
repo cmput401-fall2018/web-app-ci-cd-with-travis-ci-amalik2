@@ -16,9 +16,7 @@ class ServiceTests(unittest.TestCase):
 
 		
 	def _testDivideWithValues(self, mockValue, divideArg, expected):
-		Service.bad_random = MagicMock(mockValue)
-		assert Service().divide(divideArg) == expected
-		Service.bad_random.assert_called_once()
+		self.assertRaises(TypeError, self.instance.divide, divideArg)
 		
 	def test_divide(self):
 		self._testDivideWithValues(1, 5, 0.2)
@@ -57,19 +55,19 @@ class ServiceTests(unittest.TestCase):
 		mockOpen.return_value = MockFile([1, 4, 7])
 		randintMock.return_value = 2
 		assert Service.bad_random() == 2
-		randintMock.assert_called_once_with_args(0, 2)
+		randintMock.assert_called_once_with(0, 2)
 		
 		# empty
 		mockOpen.return_value = MockFile([])
 		randintMock.return_value = -1
 		assert Service.bad_random() == -1
-		randintMock.assert_called_once_with_args(0, -1)
+		randintMock.assert_called_once_with(0, -1)
 		
 		# float
 		mockOpen.return_value = MockFile([5.2])
 		randintMock.return_value = 0
 		assert Service.bad_random() == 0
-		randintMock.assert_called_once_with_args(0, 0)
+		randintMock.assert_called_once_with(0, 0)
 		
 		# non-numeric values
 		mockOpen.return_value = MockFile([1, "a", 7])
