@@ -4,9 +4,9 @@ import random
 from unittest.mock import MagicMock, patch, mock_open
 
 def testDivideWithValues(instance, mockValue, divideArg, expected):
-	instance.bad_random = MagicMock(mockValue)
+	Service.bad_random = MagicMock(mockValue)
 	assert instance.divide(divideArg) == expected
-	instance.bad_random.assert_called_once()
+	Service.bad_random.assert_called_once()
 
 class ServiceTests(unittest.TestCase):
 	def setUp(self):
@@ -22,25 +22,25 @@ class ServiceTests(unittest.TestCase):
 		testDivideWithValues(self.instance, 20000, -10000, -2)
 		
 	def test_abs_plus(self):
-		assert self.instance.abs_plus(-1) == 0
+		assert self.instance.abs_plus(-1) == 2
 		assert self.instance.abs_plus(1) == 2
 		assert self.instance.abs_plus(0) == 1
-		assert self.instance.abs_plus(-2) == -1
-		assert self.instance.abs_plus(-2147483648) == -2147483647
+		assert self.instance.abs_plus(-2) == 3
+		assert self.instance.abs_plus(-2147483648) == 2147483649
 		assert self.instance.abs_plus(2147483647) == 2147483648
 
 	def test_complicated_function(self):
 		self.instance.divide = MagicMock(25)
-		self.assertRaises(SyntaxError, Service.complicated_function, 25)
+		self.assertRaises(NameError, Service.complicated_function, 25)
 		
 		self.instance.divide = MagicMock(0)
-		self.assertRaises(SyntaxError, Service.complicated_function, 9)
+		self.assertRaises(NameError, Service.complicated_function, 9)
 		
 		self.instance.divide = MagicMock(100)
-		self.assertRaises(SyntaxError, Service.complicated_function, 2)
+		self.assertRaises(NameError, Service.complicated_function, 2)
 		
 		self.instance.divide = MagicMock(-25)
-		self.assertRaises(SyntaxError, Service.complicated_function, 2)
+		self.assertRaises(NameError, Service.complicated_function, 2)
 
 	@patch("builtins.open")
 	@patch("random.randint")
@@ -65,7 +65,7 @@ class ServiceTests(unittest.TestCase):
 		
 		# non-numeric values
 		mockOpen.return_value = [1, "a", 7]
-		self.assertRaises(ValueError, self.instance.bad_random)
+		self.assertRaises(ValueError, Service.bad_random)
 		
 		# no file found
-		self.assertRaises(FileNotFoundError, self.instance.bad_random)
+		self.assertRaises(FileNotFoundError, Service.bad_random)
