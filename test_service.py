@@ -44,17 +44,28 @@ class ServiceTests(unittest.TestCase):
 
 	@patch("builtins.open")
 	@patch("random.randint")
-	def test_bad_random_with_integers(self, mockOpen, randintMock):
+	def test_bad_random(self, mockOpen, randintMock):
+		# integers
 		mockOpen.return_value = [1, 4, 7]
 		randintMock.return_value = 2
 		assert self.instance.bad_random() == 2
 		randintMock.assert_called_once_with_args(0, 2)
-	
-	@patch("builtins.open")
-	def test_bad_random_with_non_integers(self, mockOpen):
+		
+		# empty
+		mockOpen.return_value = []
+		randintMock.return_value = -1
+		assert self.instance.bad_random() == -1
+		randintMock.assert_called_once_with_args(0, -1)
+		
+		# float
+		mockOpen.return_value = [5.2]
+		randintMock.return_value = 0
+		assert self.instance.bad_random() == 0
+		randintMock.assert_called_once_with_args(0, 0)
+		
+		# non-numeric values
 		mockOpen.return_value = [1, "a", 7]
 		self.assertRaises(ValueError, self.instance.bad_random)
-
-	patch("builtins.open")
-	def test_bad_random_with_no_found_file(self, mockOpen):
+		
+		# no file found
 		self.assertRaises(FileNotFoundError, self.instance.bad_random)

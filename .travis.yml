@@ -1,4 +1,7 @@
 language: python
+sudo: required
+addons:
+  chrome: stable
 python:
   - "3.5"
 before_install:
