@@ -7,7 +7,6 @@ python:
   - "3.5"
 before_install:
   - sudo apt-get install chromium-chromedriver
-  - google-chrome-stable --headless http://localhost &
 install:
   - pip install -r requirements.txt
 before_script:
