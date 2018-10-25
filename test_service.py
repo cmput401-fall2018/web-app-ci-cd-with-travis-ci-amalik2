@@ -9,8 +9,8 @@ def testDivideWithValues(instance, mockValue, divideArg, expected):
 	instance.bad_random.assert_called_once()
 
 class ServiceTests(unittest.TestCase):
-    def setUp(self):
-        self.instance = Service()
+	def setUp(self):
+		self.instance = Service()
 
 	def test_divide(self):
 		testDivideWithValues(self.instance, 1, 5, 0.2)
@@ -21,7 +21,7 @@ class ServiceTests(unittest.TestCase):
 		testDivideWithValues(self.instance, -2, -4, 0.5)
 		testDivideWithValues(self.instance, 20000, -10000, -2)
 		
-    def test_abs_plus(self):
+	def test_abs_plus(self):
 		assert instance.abs_plus(-1) == 0
 		assert instance.abs_plus(1) == 2
 		assert instance.abs_plus(0) == 1
