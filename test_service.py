@@ -56,18 +56,21 @@ class ServiceTests(unittest.TestCase):
 		randintMock.return_value = 2
 		assert Service.bad_random() == 2
 		randintMock.assert_called_once_with(0, 2)
+		randintMock.reset_mock()
 		
 		# empty
 		mockOpen.return_value = MockFile([])
 		randintMock.return_value = -1
 		assert Service.bad_random() == -1
 		randintMock.assert_called_once_with(0, -1)
+		randintMock.reset_mock()
 		
 		# float
 		mockOpen.return_value = MockFile([5.2])
 		randintMock.return_value = 0
 		assert Service.bad_random() == 0
 		randintMock.assert_called_once_with(0, 0)
+		randintMock.reset_mock()
 		
 		# non-numeric values
 		mockOpen.return_value = MockFile([1, "a", 7])
