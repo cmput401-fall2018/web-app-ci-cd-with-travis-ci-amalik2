@@ -36,7 +36,7 @@ class ServiceTests(unittest.TestCase):
 		assert self.instance.abs_plus(2147483647) == 2147483648
 		assert self.instance.abs_plus(0.55555) == 1.55555
 		assert self.instance.abs_plus(-0.55555) == 1.55555
-		self.assertRaises(ValueError, self.instance.abs_plus, "a")
+		self.assertRaises(TypeError, self.instance.abs_plus, "a")
 		
 
 	def test_complicated_function(self):
