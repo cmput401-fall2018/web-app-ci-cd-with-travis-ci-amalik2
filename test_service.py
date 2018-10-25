@@ -17,7 +17,7 @@ class ServiceTests(unittest.TestCase):
 		
 	def _testDivideWithValues(self, mockValue, divideArg, expected):
 		Service.bad_random = MagicMock(mockValue)
-		assert self.instance.divide(divideArg) == expected
+		assert Service().divide(divideArg) == expected
 		Service.bad_random.assert_called_once()
 		
 	def test_divide(self):
@@ -52,7 +52,7 @@ class ServiceTests(unittest.TestCase):
 
 	@patch("builtins.open")
 	@patch("random.randint")
-	def test_bad_random(self, mockOpen, randintMock):
+	def test_bad_random(self, randintMock, mockOpen):
 		# integers
 		mockOpen.return_value = MockFile([1, 4, 7])
 		randintMock.return_value = 2
