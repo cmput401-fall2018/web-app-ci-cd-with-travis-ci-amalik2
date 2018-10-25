@@ -75,6 +75,7 @@ class ServiceTests(unittest.TestCase):
 		# non-numeric values
 		mockOpen.return_value = MockFile([1, "a", 7])
 		self.assertRaises(ValueError, Service.bad_random)
+		mockOpen.reset_mock()
 		
 		# no file found
 		self.assertRaises(FileNotFoundError, Service.bad_random)
