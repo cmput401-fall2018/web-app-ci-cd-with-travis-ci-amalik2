@@ -21,12 +21,14 @@ class ServiceTests(unittest.TestCase):
 	@patch("service.Service.bad_random")
 	def test_divide(self, badRandomMock):
 		self._testDivideWithValues(1, 5, 0.2, badRandomMock)
-		self._testDivideWithValues(1, 0, float("inf"), badRandomMock)
 		self._testDivideWithValues(0, 5, 0, badRandomMock)
 		self._testDivideWithValues(5, 5, 1, badRandomMock)
 		self._testDivideWithValues(-3, 5, -0.6, badRandomMock)
 		self._testDivideWithValues(-2, -4, 0.5, badRandomMock)
 		self._testDivideWithValues(20000, -10000, -2, badRandomMock)
+		
+		badRandomMock.return_value = 1
+		self.assertRaises(ZeroDivisionError, self.instance.divide, 0)
 		
 	def test_abs_plus(self):
 		assert self.instance.abs_plus(-1) == 2
