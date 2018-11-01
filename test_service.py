@@ -13,12 +13,11 @@ class MockFile:
 class ServiceTests(unittest.TestCase):
 	def setUp(self):
 		self.instance = Service()
-
 		
 	def _testDivideWithValues(self, mockValue, divideArg, expected):
-		self.instance.bad_random = MagicMock(mockValue)
+		self.instance.bad_random = lambda self: mockValue
 		assert self.instance.divide(divideArg) == expected
-		
+	
 	def test_divide(self):
 		self._testDivideWithValues(1, 5, 0.2)
 		self._testDivideWithValues(1, 0, float("inf"))
@@ -41,16 +40,16 @@ class ServiceTests(unittest.TestCase):
 
 	def test_complicated_function(self):
 		self.instance.divide = MagicMock(25)
-		self.assertRaises(NameError, Service.complicated_function, 25)
+		self.assertRaises(NameError, self.instance.complicated_function, 25)
 		
 		self.instance.divide = MagicMock(0)
-		self.assertRaises(NameError, Service.complicated_function, 9)
+		self.assertRaises(NameError, self.instance.complicated_function, 9)
 		
 		self.instance.divide = MagicMock(100)
-		self.assertRaises(NameError, Service.complicated_function, 2)
+		self.assertRaises(NameError, self.instance.complicated_function, 2)
 		
 		self.instance.divide = MagicMock(-25)
-		self.assertRaises(NameError, Service.complicated_function, 2)
+		self.assertRaises(NameError, self.instance.complicated_function, 2)
 
 	@patch("builtins.open")
 	@patch("random.randint")
