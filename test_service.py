@@ -18,7 +18,7 @@ class ServiceTests(unittest.TestCase):
 		badRandomMock.return_value = mockValue
 		assert self.instance.divide(divideArg) == expected
 	
-	@patch("Service.bad_random")
+	@patch("service.Service.bad_random")
 	def test_divide(self, badRandomMock):
 		self._testDivideWithValues(1, 5, 0.2, badRandomMock)
 		self._testDivideWithValues(1, 0, float("inf"), badRandomMock)
