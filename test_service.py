@@ -16,7 +16,8 @@ class ServiceTests(unittest.TestCase):
 
 		
 	def _testDivideWithValues(self, mockValue, divideArg, expected):
-		self.assertRaises(TypeError, self.instance.divide, divideArg)
+		self.instance.bad_random = MagicMock(mockValue)
+		assert self.instance.divide(divideArg) == expected
 		
 	def test_divide(self):
 		self._testDivideWithValues(1, 5, 0.2)
@@ -37,7 +38,6 @@ class ServiceTests(unittest.TestCase):
 		assert self.instance.abs_plus(0.55555) == 1.55555
 		assert self.instance.abs_plus(-0.55555) == 1.55555
 		self.assertRaises(TypeError, self.instance.abs_plus, "a")
-		
 
 	def test_complicated_function(self):
 		self.instance.divide = MagicMock(25)
