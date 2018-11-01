@@ -14,18 +14,19 @@ class ServiceTests(unittest.TestCase):
 	def setUp(self):
 		self.instance = Service()
 		
-	def _testDivideWithValues(self, mockValue, divideArg, expected):
-		self.instance.bad_random = lambda self: mockValue
+	def _testDivideWithValues(self, mockValue, divideArg, expected, badRandomMock):
+		badRandomMock.return_value = mockValue
 		assert self.instance.divide(divideArg) == expected
 	
-	def test_divide(self):
-		self._testDivideWithValues(1, 5, 0.2)
-		self._testDivideWithValues(1, 0, float("inf"))
-		self._testDivideWithValues(0, 5, 0)
-		self._testDivideWithValues(5, 5, 1)
-		self._testDivideWithValues(-3, 5, -0.6)
-		self._testDivideWithValues(-2, -4, 0.5)
-		self._testDivideWithValues(20000, -10000, -2)
+	@patch("Service.bad_random")
+	def test_divide(self, badRandomMock):
+		self._testDivideWithValues(1, 5, 0.2, badRandomMock)
+		self._testDivideWithValues(1, 0, float("inf"), badRandomMock)
+		self._testDivideWithValues(0, 5, 0, badRandomMock)
+		self._testDivideWithValues(5, 5, 1, badRandomMock)
+		self._testDivideWithValues(-3, 5, -0.6, badRandomMock)
+		self._testDivideWithValues(-2, -4, 0.5, badRandomMock)
+		self._testDivideWithValues(20000, -10000, -2, badRandomMock)
 		
 	def test_abs_plus(self):
 		assert self.instance.abs_plus(-1) == 2
@@ -40,16 +41,16 @@ class ServiceTests(unittest.TestCase):
 
 	def test_complicated_function(self):
 		self.instance.divide = MagicMock(25)
-		self.assertRaises(NameError, self.instance.complicated_function, 25)
+		self.assertRaises(TypeError, self.instance.complicated_function, 25)
 		
 		self.instance.divide = MagicMock(0)
-		self.assertRaises(NameError, self.instance.complicated_function, 9)
+		self.assertRaises(TypeError, self.instance.complicated_function, 9)
 		
 		self.instance.divide = MagicMock(100)
-		self.assertRaises(NameError, self.instance.complicated_function, 2)
+		self.assertRaises(TypeError, self.instance.complicated_function, 2)
 		
 		self.instance.divide = MagicMock(-25)
-		self.assertRaises(NameError, self.instance.complicated_function, 2)
+		self.assertRaises(TypeError, self.instance.complicated_function, 2)
 
 	@patch("builtins.open")
 	@patch("random.randint")
